@@ -1,0 +1,29 @@
+name: PR Checks
+
+on:
+  pull_request:
+    branches: [main, dev]
+
+jobs:
+  backend:
+    name: Build & Test Backend
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore backend/WMS.Api/WMS.Api.csproj
+
+      - name: Build
+        run: dotnet build backend/WMS.Api/WMS.Api.csproj --no-restore --configuration Release
+
+      - name: Run tests
+        run: dotnet test backend/WMS.Api/WMS.Api.csproj --no-build --configuration Release
+        continue-on-error: true # until tests
