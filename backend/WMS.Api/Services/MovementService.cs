@@ -21,10 +21,10 @@ public class MovementService
             {
                 var from = await _db.Inventory
                     .FirstOrDefaultAsync(i => i.ItemId == req.ItemId && i.LocationId == req.FromLocationId)
-                    ?? throw new InvalidOperationException("Artikel ni na izvorni lokaciji.");
+                    ?? throw new InvalidOperationException("Item not found at source location.");
 
                 if (from.Quantity < req.Quantity)
-                    throw new InvalidOperationException($"Premalo zaloge: {from.Quantity}");
+                    throw new InvalidOperationException($"Insufficient stock: {from.Quantity}");
 
                 from.Quantity -= req.Quantity;
                 from.UpdatedAt = DateTime.UtcNow;
