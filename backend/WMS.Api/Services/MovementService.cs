@@ -1,10 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using WMS.Api.Data;
 using WMS.Api.Models;
+using WMS.Api.DTOs;
 
 namespace WMS.Api.Services;
-
-public record MoveRequest(int ItemId, int? FromLocationId, int? ToLocationId, decimal Quantity, string? Note);
 
 public class MovementService
 {
@@ -12,7 +11,7 @@ public class MovementService
 
     public MovementService(AppDbContext db) => _db = db;
 
-    public async Task ExecuteAsync(MoveRequest req)
+    public async Task ExecuteAsync(MoveRequestDto req)
     {
         await using var tx = await _db.Database.BeginTransactionAsync();
         try
