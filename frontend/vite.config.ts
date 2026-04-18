@@ -6,5 +6,10 @@ export default defineConfig({
     plugins: [
         tailwindcss(),
         sveltekit()
-    ]
+    ],
+    server: {
+        headers: {
+            'Content-Security-Policy': "script-src 'self' 'unsafe-eval'"
+        }
+    }
 });
