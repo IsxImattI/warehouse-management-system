@@ -124,7 +124,7 @@ dotnet test
 
 ## Contributing
 
-Contributions are welcome. Please read the guidelines before submitting a PR.
+Contributions are welcome. Please read [CONTRIBUTING.md](.github/CONTRIBUTING.md) before submitting a PR.
 
 1. Fork the repo
 2. Create a feature branch: `git checkout -b feature/your-feature`
