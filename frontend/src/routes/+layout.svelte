@@ -1,12 +1,13 @@
-<script lang="ts">
-	import favicon from '$lib/assets/favicon.svg';
-	import '../app.css';
-
-	let { children } = $props();
+<script>
+    import '../app.css';
+    let { children } = $props();
 </script>
 
-<svelte:head>
-	<link rel="icon" href={favicon} />
-</svelte:head>
+<nav class="border-b px-6 py-3 flex gap-6 text-sm font-medium">
+    <a href="/" class="hover:underline">Inventory</a>
+    <a href="/items" class="hover:underline">Items</a>
+    <a href="/locations" class="hover:underline">Locations</a>
+    <a href="/movement" class="hover:underline">Movement</a>
+</nav>
 
 {@render children()}
