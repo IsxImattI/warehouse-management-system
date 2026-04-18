@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="WMS.Api/WMS.Api.csproj" />
+  <Project Path="WMS.Tests/WMS.Tests.csproj" />
+</Solution>

@@ -10,7 +10,6 @@ frontend/*/.svelte-kit/
 frontend/*/.env
 frontend/*/.env.*
 
-# Environment - NIKOLI NA GIT
 .env
 .env.*
 !.env.example
