@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using WMS.Api.Data;
+using WMS.Api.DTOs;
 using WMS.Api.Services;
 
 namespace WMS.Api.Controllers;
@@ -12,9 +12,8 @@ public class MovementController : ControllerBase
 
     public MovementController(MovementService svc) => _svc = svc;
 
-    // POST api/movement
     [HttpPost]
-    public async Task<IActionResult> Move([FromBody] MoveRequest req)
+    public async Task<IActionResult> Move([FromBody] MoveRequestDto req)
     {
         try
         {

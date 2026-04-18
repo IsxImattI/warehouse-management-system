@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WMS.Api.Data;
+using WMS.Api.DTOs;
 using WMS.Api.Models;
 
 namespace WMS.Api.Controllers;
