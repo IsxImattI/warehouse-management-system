@@ -1,4 +1,5 @@
 namespace WMS.Api.Models;
+
 public class MovementLog
 {
     public int Id { get; set; }
@@ -10,5 +11,7 @@ public class MovementLog
     public Location? ToLocation { get; set; }
     public decimal Quantity { get; set; }
     public string? Note { get; set; }
+    public int? CreatedById { get; set; }
+    public User? CreatedBy { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 }

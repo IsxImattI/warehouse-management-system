@@ -11,19 +11,24 @@ public class AppDbContext : DbContext
     public DbSet<Location> Locations => Set<Location>();
     public DbSet<Inventory> Inventory => Set<Inventory>();
     public DbSet<MovementLog> MovementLogs => Set<MovementLog>();
+    public DbSet<User> Users => Set<User>();
 
     protected override void OnModelCreating(ModelBuilder mb)
-{
-    mb.Entity<Inventory>()
-        .HasIndex(i => new { i.ItemId, i.LocationId })
-        .IsUnique();
+    {
+        mb.Entity<Inventory>()
+            .HasIndex(i => new { i.ItemId, i.LocationId })
+            .IsUnique();
 
-    mb.Entity<Inventory>()
-        .Property(i => i.Quantity)
-        .HasPrecision(18, 3);
+        mb.Entity<Inventory>()
+            .Property(i => i.Quantity)
+            .HasPrecision(18, 3);
 
-    mb.Entity<MovementLog>()
-        .Property(m => m.Quantity)
-        .HasPrecision(18, 3);
-}
+        mb.Entity<MovementLog>()
+            .Property(m => m.Quantity)
+            .HasPrecision(18, 3);
+
+        mb.Entity<User>()
+            .HasIndex(u => u.Username)
+            .IsUnique();
+    }
 }

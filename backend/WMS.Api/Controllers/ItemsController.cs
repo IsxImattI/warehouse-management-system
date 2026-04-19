@@ -3,11 +3,13 @@ using Microsoft.EntityFrameworkCore;
 using WMS.Api.Data;
 using WMS.Api.DTOs;
 using WMS.Api.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WMS.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class ItemsController : ControllerBase
 {
     private readonly AppDbContext _db;
