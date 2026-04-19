@@ -16,14 +16,13 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '9.0.x'
+          dotnet-version: '10.0.x'
 
       - name: Restore dependencies
-        run: dotnet restore backend/WMS.Api/WMS.Api.csproj
+        run: dotnet restore backend/WMS.slnx
 
       - name: Build
-        run: dotnet build backend/WMS.Api/WMS.Api.csproj --no-restore --configuration Release
+        run: dotnet build backend/WMS.slnx --no-restore --configuration Release
 
       - name: Run tests
-        run: dotnet test backend/WMS.Api/WMS.Api.csproj --no-build --configuration Release
-        continue-on-error: false
+        run: dotnet test backend/WMS.slnx --no-build --configuration Release
