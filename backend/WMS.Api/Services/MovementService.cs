@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using WMS.Api.Data;
-using WMS.Api.Models;
 using WMS.Api.DTOs;
+using WMS.Api.Models;
 
 namespace WMS.Api.Services;
 
@@ -11,7 +11,7 @@ public class MovementService
 
     public MovementService(AppDbContext db) => _db = db;
 
-    public async Task ExecuteAsync(MoveRequestDto req)
+    public async Task ExecuteAsync(MoveRequestDto req, int? userId = null)
     {
         await using var tx = await _db.Database.BeginTransactionAsync();
         try
@@ -50,7 +50,8 @@ public class MovementService
                 FromLocationId = req.FromLocationId,
                 ToLocationId = req.ToLocationId,
                 Quantity = req.Quantity,
-                Note = req.Note
+                Note = req.Note,
+                CreatedById = userId
             });
 
             await _db.SaveChangesAsync();
