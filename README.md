@@ -2,7 +2,7 @@
 
 An open-source, mobile-first warehouse management system built for small and medium businesses. Designed to integrate with existing ERP systems via API.
 
-Built with ASP.NET Core · SQL Server · SvelteKit (coming soon)
+Built with ASP.NET Core · SQL Server · SvelteKit
 
 ---
 
@@ -12,7 +12,8 @@ Built with ASP.NET Core · SQL Server · SvelteKit (coming soon)
 - Location/bin management with QR code support
 - Inventory movement tracking with full transaction safety
 - Complete movement history log
-- Mobile-first PWA frontend (in development)
+- Mobile-first PWA frontend with barcode/QR scanning
+- Scan-to-receive mobile flow
 - ERP integration ready via REST API
 
 ---
@@ -23,7 +24,8 @@ Built with ASP.NET Core · SQL Server · SvelteKit (coming soon)
 |----------|-----------------------------|
 | Backend  | ASP.NET Core 10, EF Core    |
 | Database | SQL Server / LocalDB        |
-| Frontend | SvelteKit (PWA) — WIP       |
+| Frontend | SvelteKit 2, Tailwind CSS v4|
+| Scanning | html5-qrcode                |
 | Testing  | xUnit                       |
 | CI/CD    | GitHub Actions              |
 
@@ -35,7 +37,7 @@ Built with ASP.NET Core · SQL Server · SvelteKit (coming soon)
 
 - [.NET 10 SDK](https://dotnet.microsoft.com/download)
 - SQL Server or LocalDB
-- Node.js 20+ (for frontend)
+- Node.js 20+
 
 ### Backend Setup
 
@@ -65,6 +67,34 @@ Built with ASP.NET Core · SQL Server · SvelteKit (coming soon)
 ```
 
 5. Open Swagger UI at `https://localhost:{port}/swagger`
+
+### Frontend Setup
+
+1. Install dependencies:
+```bash
+   cd frontend
+   npm install
+```
+
+2. Create `.env` file:
+```bash
+   cp .env.example .env
+```
+   Set your backend URL:
+```
+   VITE_API_URL=http://localhost:5079
+```
+
+3. Start development server:
+```bash
+   npm run dev
+```
+
+4. For mobile testing (requires ngrok):
+```bash
+   npm run dev -- --host
+   ngrok http 5173
+```
 
 ### Running Tests
 
@@ -124,7 +154,7 @@ dotnet test
 
 ## Contributing
 
-Contributions are welcome. Please read [CONTRIBUTING.md](.github/CONTRIBUTING.md) before submitting a PR.
+Contributions are welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md) before submitting a PR.
 
 1. Fork the repo
 2. Create a feature branch: `git checkout -b feature/your-feature`
