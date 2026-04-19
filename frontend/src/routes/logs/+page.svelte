@@ -1,11 +1,12 @@
 <script lang="ts">
-    type Log = {
+        type Log = {
         id: number;
         item: { id: number; sku: string; name: string };
         fromLocation: { id: number; code: string; name: string } | null;
         toLocation: { id: number; code: string; name: string } | null;
         quantity: number;
         note: string | null;
+        createdBy: { id: number; username: string } | null;
         createdAt: string;
     };
 
@@ -29,6 +30,7 @@
                         <th class="p-3 border">To</th>
                         <th class="p-3 border">Quantity</th>
                         <th class="p-3 border">Note</th>
+                        <th class="p-3 border">Created By</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -49,6 +51,7 @@
                             </td>
                             <td class="p-3 border">{log.quantity}</td>
                             <td class="p-3 border text-gray-400">{log.note ?? '—'}</td>
+                            <td class="p-3 border text-gray-400">{log.createdBy?.username ?? '—'}</td>
                         </tr>
                     {/each}
                 </tbody>
