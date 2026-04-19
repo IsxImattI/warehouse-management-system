@@ -9,6 +9,7 @@
     <a href="/locations" class="hover:underline">Locations</a>
     <a href="/movement" class="hover:underline">Movement</a>
 	<a href="/receive" class="hover:underline">Receive</a>
+	<a href="/logs" class="hover:underline">Logs</a>
 </nav>
 
 {@render children()}
