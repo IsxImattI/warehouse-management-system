@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using WMS.Api.Data;
 using WMS.Api.Models;
+using System.Security.Claims;
 
 namespace WMS.Api.Services;
 
