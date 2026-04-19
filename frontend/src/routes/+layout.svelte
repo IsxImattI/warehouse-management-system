@@ -8,6 +8,7 @@
     <a href="/items" class="hover:underline">Items</a>
     <a href="/locations" class="hover:underline">Locations</a>
     <a href="/movement" class="hover:underline">Movement</a>
+	<a href="/receive" class="hover:underline">Receive</a>
 </nav>
 
 {@render children()}
