@@ -8,8 +8,6 @@ export default defineConfig({
         sveltekit()
     ],
     server: {
-        headers: {
-            'Content-Security-Policy': "script-src 'self' 'unsafe-eval'"
-        }
+        allowedHosts: ['viselike-mothball-shorty.ngrok-free.dev']
     }
 });
