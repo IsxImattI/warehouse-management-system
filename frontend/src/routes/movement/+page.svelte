@@ -1,6 +1,6 @@
 <script lang="ts">
     import { post } from '$lib/api';
-    import { onDestroy } from 'svelte';
+    import { onDestroy, tick } from 'svelte';
     import { Html5Qrcode } from 'html5-qrcode';
 
     type Item = { id: number; sku: string; name: string };
