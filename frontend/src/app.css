@@ -1,1 +1,165 @@
 @import "tailwindcss";
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Barlow+Condensed:wght@400;600;700;900&display=swap');
+
+:root {
+    --bg: #f5f4f0;
+    --surface: #ffffff;
+    --border: #1a1a1a;
+    --text: #1a1a1a;
+    --text-muted: #666666;
+    --accent: #ff4500;
+    --accent-hover: #cc3700;
+    --success: #1a7a3c;
+    --danger: #cc0000;
+    --mono: 'Space Mono', monospace;
+    --display: 'Barlow Condensed', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 14px;
+    margin: 0;
+}
+
+h1, h2, h3 {
+    font-family: var(--display);
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th {
+    font-family: var(--display);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 11px;
+    background: var(--text);
+    color: var(--bg);
+    padding: 10px 14px;
+    text-align: left;
+}
+
+td {
+    padding: 10px 14px;
+    border-bottom: 1px solid #e0dfd9;
+    vertical-align: middle;
+}
+
+tr:hover td {
+    background: #eeecea;
+}
+
+input, select, textarea {
+    font-family: var(--mono);
+    font-size: 13px;
+    border: 2px solid var(--border);
+    padding: 8px 12px;
+    background: var(--surface);
+    color: var(--text);
+    width: 100%;
+    outline: none;
+    transition: border-color 0.1s;
+}
+
+input:focus, select:focus {
+    border-color: var(--accent);
+}
+
+button, .btn {
+    font-family: var(--display);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 13px;
+    padding: 9px 18px;
+    border: 2px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.1s;
+}
+
+button:hover {
+    background: var(--text);
+    color: var(--bg);
+}
+
+button.primary {
+    background: var(--text);
+    color: var(--bg);
+}
+
+button.primary:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+}
+
+button.danger {
+    color: var(--danger);
+    border-color: var(--danger);
+}
+
+button.danger:hover {
+    background: var(--danger);
+    color: white;
+}
+
+button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.card {
+    background: var(--surface);
+    border: 2px solid var(--border);
+    padding: 24px;
+}
+
+.badge {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 3px 8px;
+    border: 1.5px solid currentColor;
+}
+
+.badge.admin {
+    color: var(--accent);
+    border-color: var(--accent);
+}
+
+.badge.operator {
+    color: var(--text-muted);
+}
+
+.error-msg {
+    background: #fff0f0;
+    border: 2px solid var(--danger);
+    color: var(--danger);
+    padding: 10px 14px;
+    font-size: 13px;
+}
+
+.success-msg {
+    background: #f0fff4;
+    border: 2px solid var(--success);
+    color: var(--success);
+    padding: 10px 14px;
+    font-size: 13px;
+}
