@@ -1,6 +1,7 @@
 <script lang="ts">
     import { invalidateAll } from '$app/navigation';
     import { post, put, del } from '$lib/api';
+    import QRCode from 'qrcode';
 
     type Location = {
         id: number;
@@ -9,6 +10,22 @@
         qrCode: string | null;
         createdAt: string;
     };
+
+    async function generateQR(code: string): Promise<string> {
+        return await QRCode.toDataURL(code, { width: 300, margin: 2 });
+    }
+
+    let qrModal = $state<{ code: string; dataUrl: string } | null>(null);
+
+    async function showQR(location: Location) {
+        const value = location.qrCode ?? location.code;
+        const dataUrl = await generateQR(value);
+        qrModal = { code: value, dataUrl };
+    }
+
+    function closeQR() {
+        qrModal = null;
+    }
 
     let { data } = $props();
     let locations: Location[] = $state(data.locations);
@@ -90,16 +107,16 @@
             <h2 class="font-semibold mb-4">{editingLocation ? 'Edit Location' : 'New Location'}</h2>
             <div class="grid grid-cols-2 gap-4">
                 <div>
-                    <label class="block text-sm mb-1">Code *</label>
-                    <input bind:value={code} class="border w-full p-2 rounded" placeholder="SHELF-A1" />
+                    <label class="block text-sm mb-1" for="code">Code *</label>
+                    <input id="code" bind:value={code} class="border w-full p-2 rounded" placeholder="SHELF-A1" />
                 </div>
                 <div>
-                    <label class="block text-sm mb-1">Name *</label>
-                    <input bind:value={name} class="border w-full p-2 rounded" placeholder="Shelf A1" />
+                    <label class="block text-sm mb-1" for="name">Name *</label>
+                    <input id="name" bind:value={name} class="border w-full p-2 rounded" placeholder="Shelf A1" />
                 </div>
                 <div class="col-span-2">
-                    <label class="block text-sm mb-1">QR Code value</label>
-                    <input bind:value={qrCode} class="border w-full p-2 rounded" placeholder="Optional" />
+                    <label class="block text-sm mb-1" for="qrcode">QR Code value</label>
+                    <input id="qrcode" bind:value={qrCode} class="border w-full p-2 rounded" placeholder="Optional — leave empty to use Code" />
                 </div>
             </div>
             <div class="flex gap-2 mt-4">
@@ -134,6 +151,12 @@
                         <td class="p-3 border">
                             <div class="flex gap-2">
                                 <button
+                                    onclick={() => showQR(location)}
+                                    class="text-green-600 hover:underline text-sm"
+                                >
+                                    QR
+                                </button>
+                                <button
                                     onclick={() => openEdit(location)}
                                     class="text-blue-600 hover:underline text-sm"
                                 >
@@ -153,3 +176,17 @@
         </table>
     {/if}
 </div>
+
+{#if qrModal}
+    <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded p-6 flex flex-col items-center gap-4 max-w-sm w-full">
+            <h2 class="font-bold text-lg">QR Code</h2>
+            <p class="font-mono text-sm text-gray-500">{qrModal.code}</p>
+            <img src={qrModal.dataUrl} alt="QR Code" class="w-64 h-64" />
+            <div class="flex gap-2 w-full">
+                <a href={qrModal.dataUrl} download="qr-{qrModal.code}.png" class="bg-black text-white px-4 py-2 rounded hover:bg-gray-800 text-center w-full">Download</a>
+                <button onclick={closeQR} class="border px-4 py-2 rounded hover:bg-gray-100 w-full">Close</button>
+            </div>
+        </div>
+    </div>
+{/if}
