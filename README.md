@@ -8,26 +8,29 @@ Built with ASP.NET Core · SQL Server · SvelteKit
 
 ## Features
 
-- Item catalog management (SKU, EAN)
-- Location/bin management with QR code support
+- Item catalog management (SKU, EAN, barcode scanning)
+- Location/bin management with QR code generation and printing
 - Inventory movement tracking with full transaction safety
-- Complete movement history log
+- Complete movement history log with user attribution
 - Mobile-first PWA frontend with barcode/QR scanning
 - Scan-to-receive mobile flow
+- JWT authentication with role-based access (admin / operator)
+- User management (admin only)
 - ERP integration ready via REST API
 
 ---
 
 ## Tech Stack
 
-| Layer    | Technology                  |
-|----------|-----------------------------|
-| Backend  | ASP.NET Core 10, EF Core    |
-| Database | SQL Server / LocalDB        |
-| Frontend | SvelteKit 2, Tailwind CSS v4|
-| Scanning | html5-qrcode                |
-| Testing  | xUnit                       |
-| CI/CD    | GitHub Actions              |
+| Layer      | Technology                   |
+|------------|------------------------------|
+| Backend    | ASP.NET Core 10, EF Core     |
+| Database   | SQL Server / LocalDB         |
+| Frontend   | SvelteKit 2, Tailwind CSS v4 |
+| Scanning   | html5-qrcode                 |
+| Auth       | JWT Bearer tokens, BCrypt    |
+| Testing    | xUnit (11 tests)             |
+| CI/CD      | GitHub Actions               |
 
 ---
 
@@ -38,6 +41,11 @@ Built with ASP.NET Core · SQL Server · SvelteKit
 - [.NET 10 SDK](https://dotnet.microsoft.com/download)
 - SQL Server or LocalDB
 - Node.js 20+
+- [dotnet-ef](https://learn.microsoft.com/en-us/ef/core/cli/dotnet) CLI tool
+
+```bash
+dotnet tool install --global dotnet-ef
+```
 
 ### Backend Setup
 
@@ -51,9 +59,12 @@ Built with ASP.NET Core · SQL Server · SvelteKit
 ```bash
    cp .env.example .env
 ```
-   Edit `.env` and set your connection string:
+   Edit `.env` and set your values:
 ```
    CONNECTIONSTRINGS__DEFAULT=Server=(localdb)\MSSQLLocalDB;Database=WMS_Dev;Trusted_Connection=True;TrustServerCertificate=True
+   JWT__SECRET=your-super-secret-key-change-this-in-production-min-32-chars
+   JWT__ISSUER=wms-api
+   JWT__AUDIENCE=wms-client
 ```
 
 3. Apply database migrations:
@@ -66,7 +77,19 @@ Built with ASP.NET Core · SQL Server · SvelteKit
    dotnet run
 ```
 
-5. Open Swagger UI at `https://localhost:{port}/swagger`
+5. Open Swagger UI at `http://localhost:{port}/swagger`
+
+6. Create your first admin user via Swagger — `POST /api/auth/register`:
+```json
+   {
+     "username": "admin",
+     "password": "yourpassword"
+   }
+```
+   Then update the role directly in the database:
+```sql
+   UPDATE Users SET Role = 'admin' WHERE Username = 'admin';
+```
 
 ### Frontend Setup
 
@@ -90,10 +113,16 @@ Built with ASP.NET Core · SQL Server · SvelteKit
    npm run dev
 ```
 
-4. For mobile testing (requires ngrok):
+4. For mobile testing with QR/barcode scanning (requires HTTPS via ngrok):
 ```bash
    npm run dev -- --host
    ngrok http 5173
+```
+   Add the ngrok host to `vite.config.ts`:
+```typescript
+   server: {
+     allowedHosts: ['your-ngrok-subdomain.ngrok-free.app']
+   }
 ```
 
 ### Running Tests
@@ -106,6 +135,12 @@ dotnet test
 ---
 
 ## API Endpoints
+
+### Auth
+| Method | Endpoint              | Description        |
+|--------|-----------------------|--------------------|
+| POST   | /api/auth/register    | Register user      |
+| POST   | /api/auth/login       | Login, get token   |
 
 ### Items
 | Method | Endpoint         | Description       |
@@ -133,9 +168,17 @@ dotnet test
 | GET    | /api/inventory/item/{id}        | Get inventory by item     |
 
 ### Movement
-| Method | Endpoint        | Description            |
-|--------|-----------------|------------------------|
-| POST   | /api/movement   | Execute stock movement |
+| Method | Endpoint             | Description            |
+|--------|----------------------|------------------------|
+| POST   | /api/movement        | Execute stock movement |
+| GET    | /api/movementlogs    | Get movement history   |
+
+### Users (admin only)
+| Method | Endpoint          | Description       |
+|--------|-------------------|-------------------|
+| GET    | /api/users        | Get all users     |
+| POST   | /api/users        | Create user       |
+| DELETE | /api/users/{id}   | Delete user       |
 
 #### Movement Request Body
 ```json
@@ -149,6 +192,14 @@ dotnet test
 ```
 
 > Set `fromLocationId` to `null` for incoming stock, `toLocationId` to `null` for outgoing.
+
+---
+
+## Sponsorship
+
+This project is free and open-source under AGPLv3. If WMS saves you time or money, consider supporting its development.
+
+[Become a sponsor on GitHub](https://github.com/sponsors/lsxlmattl)
 
 ---
 
