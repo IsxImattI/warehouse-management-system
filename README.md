@@ -199,7 +199,7 @@ dotnet test
 
 This project is free and open-source under AGPLv3. If WMS saves you time or money, consider supporting its development.
 
-[Become a sponsor on GitHub](https://github.com/sponsors/lsxlmattl)
+[Become a sponsor on GitHub](https://github.com/sponsors/IsxImattI)
 
 ---
 
